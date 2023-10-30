@@ -1,0 +1,101 @@
+{
+  "pacientes": [
+    {
+      "id": 1,
+      "TipoDocumento": "Cedula de ciudadania",
+      "Identificacion": 101845102,
+      "Nombre_Apellido": "Maikol Sanchez",
+      "FechaNaciPaci": "1984-08-25",
+      "Telefono": 301509632,
+      "clave": 1234
+    },
+    {
+      "TipoDocumento": "CC",
+      "Identificacion": 15494954496,
+      "Nombre_Apellido": "Edward Ediver Restrepo",
+      "FechaNaciPaci": "10 05 2005",
+      "Telefono": "1234",
+      "Clave": "1234",
+      "id": 2
+    },
+    {
+      "TipoDocumento": "TI",
+      "Identificacion": "101000584",
+      "Nombre_Apellido": "Edward Ediver Restrepo",
+      "FechaNaciPaci": "10 05 2005",
+      "Telefono": "3208252581",
+      "Clave": "12345678",
+      "id": 3
+    }
+  ],
+  "Doctor": [
+    {
+      "id": 3,
+      "NombreDoctor": "Jeison",
+      "Especialidad": "Odontologia",
+      "Correo": "Candelajeison@gmail.com"
+    },
+    {
+      "NombreDoctor": "Guillermo Castro",
+      "Especialidad": "Pediatria",
+      "Correo": "memocastro@gmail",
+      "id": 4
+    },
+    {
+      "NombreDoctor": "Camila Gonzales",
+      "Especialidad": "Dermatologa",
+      "Correo": "docCamila@gmail.com",
+      "id": 5
+    }
+  ],
+  "Agenda": [
+    {
+      "id": 1,
+      "FechaCita": "2023-06-01",
+      "HoraCita": "9:00",
+      "NombreDoctor": "Carmen Molina",
+      "Lugar": "calle 52",
+      "Especialidad": "Medicina general",
+      "Codigo_Cita": "sjygrza3564EE64"
+    },
+    {
+      "FechaCita": "19/10/2023",
+      "HoraCita": "8:40",
+      "NombreDoctor": "Camilo Perez",
+      "Lugar": "Calle 56",
+      "Especialidad": "ZZZZZZZZZZZZZZZZZ",
+      "id": 2
+    }
+  ],
+  "Citas": [
+    {
+      "id": 1,
+      "Nombre_Apellido_Paciente": "Maikol Sanchez",
+      "Nombre_Dotor": "Jeison",
+      "Fecha_cita": "2005-10-05",
+      "Hora_Cita": "13:30:00",
+      "Documento_Paciente": "101845102",
+      "Correo_Doctor": "Candelajeison@gmail.com",
+      "id_Paciente": 1
+    },
+    {
+      "id": 2,
+      "Nombre_Apellido_Paciente": "Edward Ediver Restrepo",
+      "Nombre_Dotor": "Guillermo Castro",
+      "Fecha_cita": "2023-20-10",
+      "Hora_Cita": "14:30:00",
+      "Documento_Paciente": "15494954496",
+      "Correo_Doctor": "memocastro@gmail.com",
+      "Codigo_Cita": "sjygrza3564EE64"
+    },
+    {
+      "id": 3,
+      "Nombre_Apellido_Paciente": "Edward Ediver Restrepo",
+      "Nombre_Dotor": "Guillermo Castro",
+      "Fecha_cita": "2013-21-10",
+      "Hora_Cita": "14:30:00",
+      "Documento_Paciente": "15494954496",
+      "Correo_Doctor": "memocastro@gmail.com"
+    }
+  ]
+}
