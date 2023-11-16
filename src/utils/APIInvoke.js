@@ -1,98 +1,93 @@
-import config from '../config'
+import config from "../config";
 
-class APIInvoke {
+class APIInvoke{
     async invokeGET(resource, queryParams) {
+        queryParams= queryParams ||[]
+        const queryString=queryParams.reduce((last,q,i) => last +`${i === 0 ? '?': "&" }${q}`,'')
 
-        queryParams = queryParams || []
-        const queryString = queryParams.reduce((last, q, i) => last + `${i === 0 ? '?' : "&"}${q}`, '')
-
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token")
         let bearer;
-        if (token === "") {
+        if(token === ""){
             bearer = "";
-        } else {
-            bearer = `${token}`;
+        }else{
+            bearer= `${token}`;
         }
 
         const data = {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-auth-token': bearer
+            headers:{
+                'Content-Type':'application/json',
+                'x-auth-token':bearer
             }
         }
+        
         const url = `${config.api.baseURL}${resource}${queryString}`
-        let response = (await (await fetch(url, data)).json())
+        let response = (await (await fetch(url,data)).json())
         return response
     }
+    async invokePUT(resource,body){
 
-    async invokePUT(resource, body) {
-
-        const token = localStorage.getItem("token");
+        const token =localStorage.getItem("token");
         let bearer;
-        if (token === "") {
-            bearer = "";
-        } else {
-            bearer = `${token}`;
+        if(token ===""){
+            bearer ="";
+        }else{
+        bearer=`${token}`;
         }
 
-        const data = {
+        const data ={
             method: 'PUT',
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json',
+            body:JSON.stringify(body),
+            headers:{
+                'content-type': 'application/json',
                 'x-auth-token': bearer
             }
         }
         const url = `${config.api.baseURL}${resource}`
-        let response = (await (await fetch(url, data)).json())
-        return response
+        let response = (await (await fetch(url,data)).json())
+        return response;
     }
-
-    async invokePOST(resource, body) {
-
-        const token = localStorage.getItem("token");
+    async invokePOST(resource,body){
+        const token =localStorage.getItem("token");
         let bearer;
-        if (token === "") {
-            bearer = "";
-        } else {
-            bearer = `${token}`;
+        if(token ===""){
+            bearer ="";
+        }else{
+        bearer=`${token}`;
         }
-
-        const data = {
+        const data ={
             method: 'POST',
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json',
+            body:JSON.stringify(body),
+            headers:{
+                'content-type': 'application/json',
                 'x-auth-token': bearer
             }
         }
         const url = `${config.api.baseURL}${resource}`
-        let response = (await (await fetch(url, data)).json())
-        return response
+        let response = (await (await fetch(url,data)).json())
+        return response;
+
     }
-
-    async invokeDELETE(resource) {
-
-        const token = localStorage.getItem("token");
+    async invokeDELETE(resource){
+        const token =localStorage.getItem("token");
         let bearer;
-        if (token === "") {
-            bearer = "";
-        } else {
-            bearer = `${token}`;
+        if(token ===""){
+            bearer ="";
+        }else{
+        bearer=`${token}`;
         }
-
-        const data = {
+        const data ={
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
+            headers:{
+                'content-type': 'application/json',
                 'x-auth-token': bearer
             }
         }
         const url = `${config.api.baseURL}${resource}`
-        let response = (await (await fetch(url, data)).json())
-        return response
+        let response = (await (await fetch(url,data)).json())
+        return response;
+    
     }
 }
 
-export default new APIInvoke()
+export default new APIInvoke();

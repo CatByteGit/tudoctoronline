@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import APIInvoke from '../../utils/APIInvoke';
+import swal from 'sweetalert';
 
 const CrearCuenta = () => {
     const [usuario, setUsuario] = useState({
@@ -12,7 +13,7 @@ const CrearCuenta = () => {
         password: '',
         confirmar: ''
     })
-    const { nombrePa, numIdentificacionPa, email, numeroPa, epsPa, password, config } = usuario;
+    const { nombre, numIdentificacionPa, email, numero, epsPa, password, confirmar } = usuario;
 
     const onChange = (e) => {
         setUsuario({
@@ -22,28 +23,104 @@ const CrearCuenta = () => {
     }
 
     useEffect(() => {
-        document.getElementById("nombrePa").focus();
+        document.getElementById("nombre").focus();
     }, [])
 
     const crearcuenta = async () => {
-        const data = {
-            nombrePa: usuario.nombrePa,
-            apellidoPa: usuario.apellidoPa,
-            numIdentificacionPa: usuario.numIdentificacionPa,
-            email: usuario.email,
-            epsPa: usuario.epsPa,
-            numeroPa: usuario.numeroPa,
+        if (password !== confirmar) {
+            const msg = "Contraseñas no coinciden.";
+            swal({
+                title: 'Error',
+                text: msg,
+                icon: 'error',
+                buttons: {
+                    confirmar: {
+                        text: 'Ok',
+                        value: true,
+                        visible: true,
+                        className: 'btn btn-danger',
+                        closeModal: true
+                    }
+                }
+            });
+        } else if (password.length < 6) {
+            const msg = "Contraseña demasiado corta (mayor a 6 caracteres.).";
+            swal({
+                title: 'Cuidado',
+                text: msg,
+                icon: 'warning',
+                buttons: {
+                    confirmar: {
+                        text: 'Ok',
+                        value: true,
+                        visible: true,
+                        className: 'btn btn-danger',
+                        closeModal: true
+                    }
+                }
+            });
+        } else {
+            const data = {
+                nombre: usuario.nombre,
+                numIdentificacionPa: usuario.numIdentificacionPa,
+                email: usuario.email,
+                numero: usuario.numero,
+                epsPa: usuario.epsPa,
+                password: usuario.password,
+            }
+            const response = await APIInvoke.invokePOST(`/Usuarios`, data);
+            console.log(response);
+            console.log(data);
+            const mensaje = response.msg;
 
+            if (mensaje === 'El usuario ya existe') {
+                const msg = "El usuario ya existe.";
+                swal({
+                    title: 'Error',
+                    text: msg,
+                    icon: 'info',
+                    buttons: {
+                        confirmar: {
+                            text: 'Ok',
+                            value: true,
+                            visible: true,
+                            className: 'btn btn-danger',
+                            closeModal: true
+                        }
+                    }
+                });
+            } else {
+                const msg = "El usuario fue creado correctamente.";
+                swal({
+                    title: 'Bienvenido',
+                    text: msg,
+                    icon: 'success',
+                    buttons: {
+                        confirmar: {
+                            text: 'Ok',
+                            value: true,
+                            visible: true,
+                            className: 'btn btn-primary',
+                            closeModal: true
+                        }
+                    }
+                });
+
+                setUsuario({
+                    nombre: '',
+                    numIdentificacionPa: '',
+                    email: '',
+                    numero: '',
+                    epsPa: '',
+                    password: '',
+                })
+            }
         }
-        const response = await APIInvoke.invokePOST('/Usuarios', data);
-        console.log(response);
     }
     const onSubmit = (e) => {
         e.preventDefault();
         crearcuenta();
-        alert('Cuenta creada exitosamente');
     }
-
 
     return (
 
@@ -60,12 +137,12 @@ const CrearCuenta = () => {
                             <div className="input-group mb-3">
                                 <input type="text"
                                     className="form-control"
-                                    name="nombrePa"
-                                    id="nombrePa"
+                                    name="nombre"
+                                    id="nombre"
                                     placeholder="Nombre completo"
-                                    value={nombrePa}
-                                    onChange={onChange} 
-                                    />
+                                    value={nombre}
+                                    onChange={onChange}
+                                />
                                 <div className="input-group-append">
                                     <div className="input-group-text">
                                         <span className="fas fa-user" />
@@ -75,7 +152,7 @@ const CrearCuenta = () => {
 
                             <div className="input-group mb-3">
                                 <input
-                                    type="number"
+                                    type="text"
                                     className="form-control"
                                     name="numIdentificacionPa"
                                     id="numIdentificacionPa"
@@ -105,12 +182,12 @@ const CrearCuenta = () => {
                             </div>
                             <div className="input-group mb-3">
                                 <input
-                                    type="number"
+                                    type="text"
                                     className="form-control"
-                                    name="numeroPa"
-                                    id="numeroPa"
+                                    name="numero"
+                                    id="numero"
                                     placeholder="Numero de telefono"
-                                    value={numeroPa}
+                                    value={numero}
                                     onChange={onChange}
                                 />
                                 <div className="input-group-append">
@@ -123,7 +200,7 @@ const CrearCuenta = () => {
                                 <input type="text"
                                     className="form-control"
                                     name="epsPa"
-                                    id="espPa"
+                                    id="epsPa"
                                     placeholder="Eps a la que esta afiliado"
                                     value={epsPa}
                                     onChange={onChange} />
@@ -149,9 +226,9 @@ const CrearCuenta = () => {
                             </div>
                             <div className="input-group mb-3">
                                 <input type="password" className="form-control"
-                                    nombre="config"
-                                    id="config"
-                                    value={config}
+                                    name="confirmar"
+                                    id="confirmar"
+                                    value={confirmar}
                                     onChange={onChange}
                                     placeholder="Repita su contraseña" />
                                 <div className="input-group-append">

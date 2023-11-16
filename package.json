@@ -12,14 +12,17 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
     "react-scripts": "5.0.1",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.9.0",
+    "sweetalert2-react-content": "^5.0.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "start-api": "json-server --watch bd.json --port 4000",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "start-api" : "json-server --watch bdTudoctor.json --port 3000"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
