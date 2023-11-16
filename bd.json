@@ -8,24 +8,6 @@
       "epsPa": "sanitas",
       "password": "12345678",
       "id": 1
-    },
-    {
-      "nombre": "cola granulada",
-      "numIdentificacionPa": "13245678",
-      "email": "jhoan@gmail.com",
-      "numero": "123456789",
-      "epsPa": "sanitas",
-      "password": "12345678",
-      "id": 2
-    },
-    {
-      "nombre": "Mochuelo",
-      "numIdentificacionPa": "543243",
-      "email": "chimito13@gmail.com",
-      "numero": "34534324132",
-      "epsPa": "Mochuelanda",
-      "password": "123456",
-      "id": 3
     }
   ]
 }

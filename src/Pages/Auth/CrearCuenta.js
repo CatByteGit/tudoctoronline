@@ -69,8 +69,6 @@ const CrearCuenta = () => {
                 password: usuario.password,
             }
             const response = await APIInvoke.invokePOST(`/Usuarios`, data);
-            console.log(response);
-            console.log(data);
             const mensaje = response.msg;
 
             if (mensaje === 'El usuario ya existe') {
