@@ -1,0 +1,35 @@
+{
+  "Pacientes": [
+    {
+      "Nombre_Apellido": "Jhoan",
+      "TipoDocumento": "CedulaCiudadania",
+      "Identificacion": "1098071276",
+      "FechaNaciPaci": "2023-11-30",
+      "Telefono": "3126545342",
+      "clave": "12345678",
+      "id": 1
+    },
+    {
+      "Nombre_Apellido": "Jhoan",
+      "TipoDocumento": "CedulaCiudadania",
+      "Identificacion": "1098071276",
+      "Telefono": "",
+      "clave": "12345678",
+      "id": 2
+    }
+  ],
+  "Doctor": [
+    {
+      "NombreDoctor": "MOCHUELO",
+      "Especialidad": "MORDER VRG",
+      "Correo": "MUYCERDASXXX@SERVIPORNO.COM",
+      "id": 1
+    }
+  ],
+  "Agenda": [
+    {}
+  ],
+  "Citas": [
+    {}
+  ]
+}
