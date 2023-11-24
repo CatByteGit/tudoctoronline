@@ -138,7 +138,7 @@ const ListarDoctor = () => {
                                                     <th style={{ width: '15%' }}>id</th>
                                                     <th style={{ width: '15%' }}>Nombre</th>
                                                     <th style={{ width: '15%' }}>Especialidad</th>
-                                                    <th style={{ width: '20%' }}>Correo</th>
+                                                    <th style={{ width: '20%' }}>Identificación</th>
                                                     <th style={{ width: '15%' }}>Acción</th>
                                                 </tr>
                                             </thead>
@@ -146,9 +146,9 @@ const ListarDoctor = () => {
                                                 {Doctor.map((Doctor, i) => (
                                                     <tr key={Doctor.id}>
                                                         <td>{(i + 1)}</td>
-                                                        <td>{Doctor.NombreDoctor}</td>
+                                                        <td>{Doctor.Nombre_Apellido}</td>
                                                         <td>{Doctor.Especialidad}</td>
-                                                        <td>{Doctor.Correo}</td>
+                                                        <td>{Doctor.Identificacion}</td>
                                                         <td>
                                                             <Link to={`/EditarDoctor/${Doctor.id}`} className='btn btn-warning'>Editar</Link>
 

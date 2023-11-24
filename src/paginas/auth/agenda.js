@@ -1,233 +1,286 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import APIInvoke from '../../utils/APIInvoke';
+import swal from 'sweetalert';
 
 const Agenda = () => {
-  const url = "http://localhost:4000/Agenda";
-  const [showAgendarForm, setShowAgendarForm] = useState(false);
-  const [selectedAgenda, setSelectedAgenda] = useState(null);
+  const [Agenda, setAgenda] = useState({
+    FechaCita: '',
+    HoraCita: '',
+    Doctor: '',
+    Especialidad: '',
+  })
+  const { FechaCita, HoraCita, Doctor, Especialidad } = Agenda;
 
-  const [Agenda, setAgenda] = useState([]);
-  const [FechaCita, setFechaCita] = useState("");
-  const [HoraCita, setHoraCita] = useState("");
-  const [NombreDoctor, setNombreDoctor] = useState("");
-  const [Lugar, setLugar] = useState("");
-  const [Especialidad, setEspecialidad] = useState("");
+  const onChange = (e) => {
+    setAgenda({
+      ...Agenda,
+      [e.target.name]: e.target.value
+    })
+  }
 
   useEffect(() => {
-    getAgenda();
-  }, []);
+    document.getElementById("FechaCita").focus();
+  }, [])
 
-  const getAgenda = async () => {
-    try {
-      const response = await axios.get(url);
-      setAgenda(response.data);
-    } catch (error) {
-      console.error("Error al obtener agendas:", error);
-    }
-  };
-
-  const handleAgendarCitaClick = (agendaItem) => {
-    setSelectedAgenda(agendaItem);
-    setShowAgendarForm(true);
-  };
-
-  const handleAgendarCita = async (event) => {
-    event.preventDefault();
-
-    const nuevaCita = {
-      FechaCita,
-      HoraCita,
-      NombreDoctor,
-      Lugar,
-      Especialidad,
-    };
-
-    try {
-      const response = await axios.post(`${url}/Citas`, nuevaCita);
-
-      if (response.status === 200) {
-        alert("Cita agendada con éxito");
-        setShowAgendarForm(false);
-
-        // Actualiza la lista de agendas disponibles
-        const updatedAgendas = Agenda.filter(
-          (item) => item.id !== selectedAgenda.id
+  const registrarPacientes = async () => {
+    const verificarExistenciaUsuario = async (Doctor) => {
+      try {
+        const response = await APIInvoke.invokeGET(
+          `/Doctor?Nombre_Apellido=${Doctor}`
         );
-        setAgenda(updatedAgendas);
+        if (response && response.length > 0) {
+          return true; // El usuario ya existe
+        } else {
+          return false; // El usuario no existe
+        }
 
-        // Reinicia los campos del formulario
-        setFechaCita("");
-        setHoraCita("");
-        setNombreDoctor("");
-        setLugar("");
-        setEspecialidad("");
-      } else {
-        alert("Hubo un error al agendar la cita.");
+      } catch (error) {
+        console.error(error);
+        return false; // Maneja el error si la solicitud falla 
       }
-    } catch (error) {
-      console.error("Error al agendar la cita:", error);
-      alert("Hubo un error al agendar la cita.");
+    };
+    const verificarAgendaExiste = async (FechaCita, HoraCita) => {
+      try {
+        const response = await APIInvoke.invokeGET(
+          `/Agenda?FechaCita=${FechaCita}&&HoraCita=${HoraCita}`
+        );
+        if (response && response.length > 0) {
+          return true; // El usuario ya existe
+        } else {
+          return false; // El usuario no existe
+        }
+
+      } catch (error) {
+        console.error(error);
+        return false; // Maneja el error si la solicitud falla 
+      }
+    };
+    const agendaExiste = await verificarAgendaExiste(FechaCita, HoraCita);
+
+    const usuarioExistente = await verificarExistenciaUsuario(Doctor);
+    const data = {
+      FechaCita: Agenda.FechaCita,
+      HoraCita: Agenda.HoraCita,
+      Doctor: Agenda.Doctor,
+      Especialidad: Agenda.Especialidad,
     }
-  };
+    const response = await APIInvoke.invokePOST(`/Agenda`, data);
+    const mensaje = response.msg;
 
-  return (
-    <div className="hold-transition sidebar-mini">
-      <div className="wrapper">
-        <nav className="main-header navbar navbar-expand navbar-white navbar-light">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <b className="nav-link" data-widget="pushmenu" role="button">
-                <i className="fas fa-bars" />
-              </b>
-            </li>
-            <li className="nav-item d-none d-sm-inline-block">
-              <b className="nav-link"> Menú</b>
-            </li>
-          </ul>
-        </nav>
+    if (usuarioExistente) {
+      const msg = "El doctor existe, se ha creado a agenda exitosamente";
+      swal({
+        title: 'Hecho',
+        text: msg,
+        icon: 'success',
+        buttons: {
+          confirmar: {
+            text: 'Ok',
+            value: true,
+            visible: true,
+            className: 'btn btn-primary',
+            closeModal: true
+          }
+        }
+      });
+      if (agendaExiste) {
+        const msg = "La agenda ya existe.";
+        swal({
+          title: 'Error',
+          text: msg,
+          icon: 'info',
+          buttons: {
+            confirmar: {
+              text: 'Ok',
+              value: true,
+              visible: true,
+              className: 'btn btn-danger',
+              closeModal: true
+            }
+          }
+        });
 
-        <aside className="main-sidebar sidebar-dark-primary elevation-4">
-          <b className="brand-link">
-            <span className="brand-text font-weight-light">Bienvenido</span>
-          </b>
+      } else {
+        const msg = "La agenda ha sido creada exitosamente.";
+        swal({
+          title: 'Hecho',
+          text: msg,
+          icon: 'success',
+          buttons: {
+            confirmar: {
+              text: 'Ok',
+              value: true,
+              visible: true,
+              className: 'btn btn-primary',
+              closeModal: true
+            }
+          }
+        });
+      } 
+    }else {
+        const msg = "El doctor no existe.";
+        swal({
+          title: 'Error',
+          text: msg,
+          icon: 'info',
+          buttons: {
+            confirmar: {
+              text: 'Ok',
+              value: true,
+              visible: true,
+              className: 'btn btn-danger',
+              closeModal: true
+            }
+          }
+        });
 
-          <div className="sidebar">
-            <nav className="mt-2">
-              <ul
-                className="nav nav-pills nav-sidebar flex-column"
-                data-widget="treeview"
-                role="menu"
-                data-accordion="false"
-              >
-                <li className="nav-item">
-                  <Link to={"/dashboard"} className="nav-link">
-                    Inicio
-                  </Link>
-                </li>
-                <li class="nav-item">
-                  <Link to="/perfil" class="nav-link">
-                    Perfil
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </aside>
+        setAgenda({
+          FechaCita: '',
+          HoraCita: '',
+          Doctor: '',
+          Especialidad: '',
+        })
+      }
 
-        <div className="content-wrapper">
-          <div className="content-header">
-            <div className="container-fluid">
-              <div className="row mb-2">
-                <div className="col-sm-6">
-                  <h1 className="m-0">Agendas Disponibles</h1>
+    }
+    const onSubmit = (e) => {
+      e.preventDefault();
+      registrarPacientes();
+    }
+
+    return (
+      <div className="hold-transition sidebar-mini">
+        <div className="wrapper">
+          <nav className="main-header navbar navbar-expand navbar-white navbar-light">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <b className="nav-link" data-widget="pushmenu" role="button">
+                  <i className="fas fa-bars" />
+                </b>
+              </li>
+              <li className="nav-item d-none d-sm-inline-block">
+                <b className="nav-link"> Menú</b>
+              </li>
+            </ul>
+          </nav>
+
+          <aside className="main-sidebar sidebar-dark-primary elevation-4">
+            <b className="brand-link">
+              <span className="brand-text font-weight-light">
+                Tu Doctor Online
+              </span>
+            </b>
+
+            <div className="sidebar">
+              <nav className="mt-2">
+                <ul
+                  className="nav nav-pills nav-sidebar flex-column"
+                  data-widget="treeview"
+                  role="menu"
+                  data-accordion="false"
+                >
+                  <li className="nav-item">
+                    <Link to={"/dashboard"} className="nav-link">
+                      Inicio
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to={"/especialidades"} className="nav-link">
+                      Especialidades
+                    </Link>
+                  </li>
+                  <li class="nav-item">
+                    <Link to={"/login"} className="nav-link">
+                      Cerrar Sesión
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </aside>
+
+          <div className="hold-transition register-page">
+            <div className="register-box">
+              <div className="card">
+                <div className="card-body register-card-body">
+                  <p className="login-box-msg">Registro de agenda</p>
+                  <form onSubmit={onSubmit}>
+                    <div className="input-group mb-3">
+                      <input
+                        type="date"
+                        className="form-control"
+                        id="FechaCita"
+                        name="FechaCita"
+                        value={FechaCita}
+                        onChange={onChange}
+                      />
+                      <div className="input-group-append">
+                        <div className="input-group-text">
+                          <span className="fa-solid fa-user-doctor" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="input-group mb-3">
+                      <input
+                        type='text'
+                        className="form-control"
+                        id="Especialidad"
+                        name="Especialidad"
+                        placeholder="Especialidad"
+                        value={Especialidad}
+                        onChange={onChange}
+                      />
+                      <div className="input-group-append">
+                        <div className="input-group-text">
+                          <span className="fa-solid fa-user-tie" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="input-group mb-3">
+                      <input
+                        type='text'
+                        className="form-control"
+                        id="Doctor"
+                        name="Doctor"
+                        placeholder="Doctor"
+                        value={Doctor}
+                        onChange={onChange}
+                      />
+                      <div className="input-group-append">
+                        <div className="input-group-text">
+                          <span className="fa-solid fa-user-tie" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="input-group mb-3">
+                      <input
+                        type="time"
+                        className="form-control"
+                        id="HoraCita"
+                        name="HoraCita"
+                        value={HoraCita}
+                        onChange={onChange}
+                      />
+                    </div>
+                    <button type="submit" className="btn btn-success mt-3">
+                      Guardar
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="container">
-            {Agenda.map((agenda) => (
-              <div className="card" key={agenda.id}>
-                <div className="card-body">
-                  <p>
-                    Fecha: {agenda.FechaCita}
-                    <br></br>
-                    Hora: {agenda.HoraCita}
-                    <br></br>
-                    Médico:{agenda.NombreDoctor}
-                    <br></br>
-                    Lugar: {agenda.Lugar}
-                    <br></br>
-                    Especialidad: {agenda.Especialidad}
-                  </p>
-                  <button
-                    onClick={() => handleAgendarCitaClick(agenda)}
-                    className="btn btn-primary"
-                  >
-                    Agendar Cita
-                  </button>
-                </div>
-              </div>
-            ))}
-
-            {showAgendarForm && (
-              <div className="card mt-3">
-                <div className="card-header">Agendar Cita</div>
-                <div className="card-body">
-                  <form onSubmit={handleAgendarCita}>
-                    <div className="form-group">
-                      <label htmlFor="Fecha">Fecha:</label>
-                      <input
-                        type="date"
-                        id="Fecha"
-                        name="Fecha"
-                        className="form-control"
-                        value={FechaCita}
-                        onChange={(e) => setFechaCita(e.target.value)}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="Hora">Hora:</label>
-                      <input
-                        type="Time"
-                        id="Hora"
-                        name="Hora"
-                        className="form-control"
-                        value={HoraCita}
-                        onChange={(e) => setHoraCita(e.target.value)}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="Doctor">Doctor:</label>
-                      <input
-                        type="text"
-                        id="Doctor"
-                        name="Doctor"
-                        className="form-control"
-                        value={NombreDoctor}
-                        onChange={(e) => setNombreDoctor(e.target.value)}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="Lugar">Lugar:</label>
-                      <input
-                        type="text"
-                        id="Lugar"
-                        name="Lugar"
-                        className="form-control"
-                        value={Lugar}
-                        onChange={(e) => setLugar(e.target.value)}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="Especialidad">Especialidad:</label>
-                      <input
-                        type="text"
-                        id="Especialidad"
-                        name="Especialidad"
-                        className="form-control"
-                        value={Especialidad}
-                        onChange={(e) => setEspecialidad(e.target.value)}
-                      />
-                    </div>
-                    <button type="submit" className="btn btn-success">
-                      Agendar
-                    </button>
-                  </form>
-                </div>
-              </div>
-            )}
-          </div>
+          <footer className="main-footer">
+            <div className="float-right d-none d-sm-block">
+              <b>Version</b> 1.0
+            </div>
+            <strong>Tu Doctor Online © 2014-2021.</strong> Derechos reservados.
+          </footer>
         </div>
-
-        <footer className="main-footer">
-          <div className="float-right d-none d-sm-block">
-          </div>
-          <strong>Tu Doctor Online © 2014-2021.</strong> Derechos reservados.
-        </footer>
       </div>
-    </div>
-  );
-};
-export default Agenda;
+    );
+  };
+
+  export default Agenda;

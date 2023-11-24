@@ -81,7 +81,7 @@ const RegistrarDoctores = () => {
                 Nombre_Apellido: Doctores.Nombre_Apellido,
                 TipoDocumento: Doctores.TipoDocumento,
                 Identificacion: Doctores.Identificacion,
-                FechaNaciPaci: Doctores.FechaNaciPaci,
+                Especialidad: Doctores.Especialidad,
                 Telefono: Doctores.Telefono,
                 clave: Doctores.clave,
             }
@@ -125,7 +125,7 @@ const RegistrarDoctores = () => {
                     Nombre_Apellido: '',
                     TipoDocumento: '',
                     Identificacion: '',
-                    FechaNaciPaci: '',
+                    Especialidad: '',
                     Telefono: '',
                     clave: '',
                 })

@@ -20,14 +20,57 @@
   ],
   "Doctor": [
     {
-      "NombreDoctor": "MOCHUELO",
-      "Especialidad": "MORDER VRG",
-      "Correo": "MUYCERDASXXX@SERVIPORNO.COM",
-      "id": 1
+      "Nombre_Apellido": "Mario",
+      "TipoDocumento": "CedulaCiudadania",
+      "Identificacion": "4441614645645665",
+      "Especialidad": "Medicina General",
+      "clave": "123456789",
+      "id": 4
     }
   ],
   "Agenda": [
-    {}
+    {
+      "FechaCita": "2023-11-25",
+      "HoraCita": "18:40",
+      "Doctor": "Mario",
+      "Especialidad": "Odontología",
+      "id": 5
+    },
+    {
+      "FechaCita": "2023-11-25",
+      "HoraCita": "18:40",
+      "Doctor": "Mario",
+      "Especialidad": "Odontología",
+      "id": 6
+    },
+    {
+      "FechaCita": "2023-11-25",
+      "HoraCita": "18:40",
+      "Doctor": "Mario",
+      "Especialidad": "Odontología",
+      "id": 7
+    },
+    {
+      "FechaCita": "2023-11-25",
+      "HoraCita": "18:40",
+      "Doctor": "Mario",
+      "Especialidad": "Odontología",
+      "id": 8
+    },
+    {
+      "FechaCita": "2023-11-25",
+      "HoraCita": "18:40",
+      "Doctor": "Mario",
+      "Especialidad": "Odontología",
+      "id": 9
+    },
+    {
+      "FechaCita": "2023-11-25",
+      "HoraCita": "18:41",
+      "Doctor": "Mario",
+      "Especialidad": "Odontología",
+      "id": 10
+    }
   ],
   "Citas": [
     {}

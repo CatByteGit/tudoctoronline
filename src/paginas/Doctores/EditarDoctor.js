@@ -124,7 +124,7 @@ const EditarDoctor = () => {
                     <div className="register-box">
                         <div className="card">
                             <div className="card-body register-card-body">
-                                <p className="login-box-msg">Registro de pacientes</p>
+                                <p className="login-box-msg">Editar Doctor</p>
                                 <form onSubmit={handleSubmit}>
                                     <div className="input-group mb-3">
                                         <input
