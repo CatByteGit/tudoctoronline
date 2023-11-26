@@ -11,10 +11,11 @@ const Login = () => {
     //Definir el estado inicial de las variables
     const [paciente, setPacientes] = useState({
         Identificacion: '',
-        Clave: ''
+        Clave: '',
+        tipoUsuario: ''
     });
 
-    const { Identificacion, Clave } = paciente;
+    const { Identificacion, Clave, tipoUsuario } = paciente;
 
     const onChange = (e) => {
         setPacientes({
@@ -30,11 +31,11 @@ const Login = () => {
 
 
     const iniciarSesion = async () => {
-        const verificarExistenciaPacientes = async (Identificación, Clave) => {
+        const verificarExistenciaPacientes = async (Identificación, Clave, tipoUsuario) => {
             try {
                 //crear la url para la consulta
                 const response = await APIInvoke.invokeGET(
-                    `/Pacientes?Identificación=${Identificación}&Clave=${Clave}`
+                    `/${tipoUsuario}?Identificacion=${Identificación}&Clave=${Clave}`
                 );
                 if (response && response.length > 0) {
                     // Devuelve el primer usuario que coincide
@@ -66,9 +67,9 @@ const Login = () => {
                 },
             });
         } else {
-            const PacientesExistente = await verificarExistenciaPacientes(Identificacion, Clave);
+            const PacientesExistente = await verificarExistenciaPacientes(Identificacion, Clave, tipoUsuario);
             const response = await APIInvoke.invokeGET(
-                `/Pacientes?Identificacion=${Identificacion}&Clave=${Clave}`
+                `/${tipoUsuario}?Identificacion=${Identificacion}&Clave=${Clave}`
             );
 
             if (!PacientesExistente) {
@@ -88,13 +89,23 @@ const Login = () => {
                     }
                 });
             } else {
-                //Contenemos el token de acceso
-                const jwt = response.token;
-                //Guardar el token en el localstorage
-                localStorage.setItem('token', jwt);
+                if (tipoUsuario === "Doctor") {
+                    //Guardar el token en el localstorage
+                localStorage.setItem('Identificacion', Identificacion);
                 //Redireccionamos al home o pagina principal
+                navigate("/dashboardDoctor")
+                } else if (tipoUsuario === "Pacientes") {
+                    //Guardar el token en el localstorage
+                localStorage.setItem('Identificacion', Identificacion);
+                //Redireccionamos al home o pagina principal
+                navigate("/dashboardPaciente")
+                }else if (tipoUsuario === "Admin"){
+                    //Redireccionamos al home o pagina principal
                 navigate("/dashboard")
+                }
+                
             }
+                
         }
     }
 
@@ -150,7 +161,23 @@ const Login = () => {
                                     </div>
                                 </div>
                             </div>
-
+                            <div className="input-group mb-3">
+                                        <select className="form-control"
+                                            name="tipoUsuario"
+                                            value={tipoUsuario}
+                                            onChange={onChange}
+                                        >
+                                            <option value="">Seleccione un tipo de documento</option>
+                                            <option value="Doctor">Doctor</option>
+                                            <option value="Pacientes">Paciente</option>
+                                            <option value="Admin">Administrador</option>
+                                        </select>
+                                        <div className="input-group-append">
+                                            <div className="input-group-text">
+                                                <span className="fa-regular fa-address-card" />
+                                            </div>
+                                        </div>
+                                    </div>
                             <div className="social-auth-links text-center mb-3">
                                 <button
                                     to={"#"}

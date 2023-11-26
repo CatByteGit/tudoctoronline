@@ -1,4 +1,11 @@
 {
+  "Admin": [
+    {
+      "Nombre_Apellido": "Jhoan",
+      "clave": "12345678",
+      "id": 1
+    }
+  ],
   "Pacientes": [
     {
       "Nombre_Apellido": "Jhoan",
@@ -12,8 +19,9 @@
     {
       "Nombre_Apellido": "Jhoan",
       "TipoDocumento": "CedulaCiudadania",
-      "Identificacion": "1098071276",
-      "Telefono": "",
+      "Identificacion": "12345678",
+      "FechaNaciPaci": "2023-11-16",
+      "Telefono": "2134567897",
       "clave": "12345678",
       "id": 2
     }
@@ -26,53 +34,27 @@
       "Especialidad": "Medicina General",
       "clave": "123456789",
       "id": 4
+    },
+    {
+      "Nombre_Apellido": "Jhoan",
+      "TipoDocumento": "CedulaCiudadania",
+      "Identificacion": "1098071276",
+      "Especialidad": "Odontología",
+      "clave": "123456789",
+      "id": 5
     }
   ],
   "Agenda": [
     {
       "FechaCita": "2023-11-25",
-      "HoraCita": "18:40",
+      "HoraCita": "19:15",
       "Doctor": "Mario",
+      "IdentificacionDoc": "4441614645645665",
       "Especialidad": "Odontología",
-      "id": 5
-    },
-    {
-      "FechaCita": "2023-11-25",
-      "HoraCita": "18:40",
-      "Doctor": "Mario",
-      "Especialidad": "Odontología",
+      "Estado": "Disponible",
+      "identificacionPa": "1098071276",
+      "NombrePa": "Jhoan",
       "id": 6
-    },
-    {
-      "FechaCita": "2023-11-25",
-      "HoraCita": "18:40",
-      "Doctor": "Mario",
-      "Especialidad": "Odontología",
-      "id": 7
-    },
-    {
-      "FechaCita": "2023-11-25",
-      "HoraCita": "18:40",
-      "Doctor": "Mario",
-      "Especialidad": "Odontología",
-      "id": 8
-    },
-    {
-      "FechaCita": "2023-11-25",
-      "HoraCita": "18:40",
-      "Doctor": "Mario",
-      "Especialidad": "Odontología",
-      "id": 9
-    },
-    {
-      "FechaCita": "2023-11-25",
-      "HoraCita": "18:41",
-      "Doctor": "Mario",
-      "Especialidad": "Odontología",
-      "id": 10
     }
-  ],
-  "Citas": [
-    {}
   ]
 }

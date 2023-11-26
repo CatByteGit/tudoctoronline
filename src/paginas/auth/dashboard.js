@@ -4,62 +4,24 @@ import { Link } from "react-router-dom";
 import Swal from 'sweetalert2';
 import withReactContent from "sweetalert2-react-content";
 import { show_alerta } from "../../functions";
+import APIInvoke from "../../utils/APIInvoke";
 
-const Dashboard = () => { // Define el componente Dashboard
-  const url = 'http://localhost:4000/Citas'; // URL de la API para obtener citas
-  const [Citas, setCitas] = useState([]); // Estado para almacenar las citas
+const Dashboard = () => {
+  const [ Citas, setCitas ] = useState([]);
+  const identificacion = localStorage.getItem("Identificacion")
 
+  const cargarCitas = async () => {
+    try {
+      const response = await APIInvoke.invokeGET(`/Agenda?identificacionPa=${identificacion}`);
+      setCitas(response);
+    } catch (error) {
+      console.error("Error al cargar las citas: ", error)
+    }
+  }
   //Obtener las citas desde la api
   useEffect(() => {
-    getCitas();
+    cargarCitas();
   }, []);
-
-  const getCitas = async () => {
-    const respuesta = await axios.get(url);//Realizar solicitudes a la url
-    setCitas(respuesta.data);    // Actualiza el estado Citas con los datos recibidos
-  }
-
-  // Define la función envarSolicitud para manejar solicitudes DELETE
-  const envarSolicitud = async (metodo, id) => {
-    try {
-      const respuesta = await axios.delete(`${url}/${id}`);
-      const tipo = respuesta.data[0];  // Extrae el tipo y mensaje de la respuesta
-      const msj = respuesta.data[1];
-      show_alerta(msj, tipo);
-
-      if (tipo === 'success') {
-        show_alerta('Su cita ha sido cancelada');
-        getCitas();
-      }
-    } catch (error) {
-      show_alerta('Error al eliminar la cita');
-      console.error(error);
-    }
-  }
-
-  //  // Función para eliminar citas
-  const deleteCitas = async (id) => {
-    // Crea una instancia de SweetAlert para mostrar un cuadro de confirmación
-    const MySwal = withReactContent(Swal);
-    const confirmationResult = await MySwal.fire({
-      title: '¿Está seguro?',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
-    });
-
-    if (confirmationResult.isConfirmed) {
-      try {
-        await envarSolicitud('DELETE', id);
-        show_alerta('Cita cancelada exitosamente', 'success');
-      } catch (error) {
-        show_alerta('No se pudo cancelar la cita', 'error');
-      }
-    } else {
-      show_alerta('cita cancelada');
-    }
-  };
 
   return (
     <div className="hold-transition sidebar-mini">
@@ -106,7 +68,7 @@ const Dashboard = () => { // Define el componente Dashboard
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/detalleagenda" className="nav-link">
+                  <Link to="/agendaAd" className="nav-link">
                     Detalles de Agenda Médica
                   </Link>
                 </li>
@@ -147,9 +109,11 @@ const Dashboard = () => { // Define el componente Dashboard
                         <tr>
                           <th style={{ width: '15%' }}>Fecha</th>
                           <th style={{ width: '15%' }}>Hora</th>
-                          <th style={{ width: '15%' }}>Lugar</th>
-                          <th style={{ width: '20%' }}>Nombre Doctor</th>
+                          <th style={{ width: '15%' }}>Doctor</th>
                           <th style={{ width: '20%' }}>Especialidad</th>
+                          <th style={{ width: '20%' }}>Estado</th>
+                          <th style={{ width: '20%' }}>identificacionPa</th>
+                          <th style={{ width: '20%' }}>NombrePa</th>
                           <th style={{ width: '15%' }}>Acción</th>
                         </tr>
                       </thead>
@@ -158,11 +122,13 @@ const Dashboard = () => { // Define el componente Dashboard
                           <tr key={Citas.id}>
                             <td>{Citas.FechaCita}</td>
                             <td>{Citas.HoraCita}</td>
-                            <td>{Citas.Lugar}</td>
-                            <td>{Citas.NombreDoctor}</td>
+                            <td>{Citas.Doctor}</td>
                             <td>{Citas.Especialidad}</td>
+                            <td>{Citas.Estado}</td>
+                            <td>{Citas.identificacionPa}</td>
+                            <td>{Citas.NombrePa}</td>
                             <td>
-                              <button onClick={() => deleteCitas(Citas.id)}
+                              <button 
                                 className="btn btn-danger">
                                 <i className="fa-solid fa-trash"></i>
                               </button>

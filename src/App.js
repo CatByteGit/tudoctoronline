@@ -10,6 +10,12 @@ import RegistroDoctor from "./paginas/Doctores/RegistroDoctor";
 import EditarPaciente from "./paginas/Pacientes/EditarPaciente";
 import EditarDoctor from "./paginas/Doctores/EditarDoctor";
 import ListarPaciente from "./paginas/Pacientes/ListarPaciente";
+import ListarAgenda from "./paginas/auth/detalleAgenda";
+import EditarAgenda from "./paginas/auth/editarAgenda";
+import Doctor from "./paginas/auth/dashboardDoctor";
+import Paciente from "./paginas/auth/dasboardPaciente";
+import AgendaAd from "./paginas/auth/detalleAgendaAdmin";
+import AgendaDoc from "./paginas/auth/detalleAgendaDoctor"
 
 function App() {
   return (
@@ -25,6 +31,12 @@ function App() {
         <Route path="/EditarPaciente/:id" exact element={<EditarPaciente />} />
         <Route path="/EditarDoctor/:id" element={<EditarDoctor />} />
         <Route path="/ListarPaciente" element={<ListarPaciente />} />
+        <Route path="/detalleAgenda" element= {<ListarAgenda />}></Route>
+        <Route path="/editarAgenda/:id" element= {<EditarAgenda />}></Route>
+        <Route path="/dashboardDoctor" element= {<Doctor />}></Route>
+        <Route path="/dashboardPaciente" element= {<Paciente />}></Route>
+        <Route path="/agendaAd" exact element={<AgendaAd />} />
+        <Route path="/detalleagendaDoctor" exact element={<AgendaDoc />} />
       </Routes>
     </BrowserRouter>
   );
