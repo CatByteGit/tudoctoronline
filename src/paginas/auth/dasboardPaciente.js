@@ -1,8 +1,6 @@
-import axios from "axios";
+
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Swal from 'sweetalert2';
-import withReactContent from "sweetalert2-react-content";
 import { show_alerta } from "../../functions";
 import APIInvoke from "../../utils/APIInvoke";
 
@@ -16,6 +14,33 @@ const Paciente = () => {
             setCitas(response);
         } catch (error) {
             console.error("Error al cargar las citas: ", error)
+        }
+    }
+    const handleCancelarCita = async (id) => {
+        try {
+            // Obtener la cita actual
+            const citaActual = Citas.find(cita => cita.id === id);
+
+            // Crear un objeto con todos los datos existentes, pero con el estado actualizado
+            const datosActualizados = {
+                ...citaActual,
+                Estado: 'Cancelada',
+                identificacionPa: '',
+                NombrePa: '',
+            };
+
+            // Hacer la solicitud al servidor para actualizar la cita con los datos actualizados
+            await APIInvoke.invokePUT(`/Agenda/${id}`, datosActualizados);
+
+            // Recargar la lista de citas después de la actualización
+            cargarCitas();
+
+            // Mostrar una alerta o mensaje de éxito
+            show_alerta('La cita ha sido cancelada correctamente', 'success');
+        } catch (error) {
+            console.error("Error al cancelar la cita: ", error);
+            // Mostrar una alerta o mensaje de error si la solicitud falla
+            show_alerta('Error al cancelar la cita. Por favor, inténtelo de nuevo.', 'error');
         }
     }
     //Obtener las citas desde la api
@@ -115,7 +140,7 @@ const Paciente = () => {
                                                         <td>
                                                             <button
                                                                 className="btn btn-danger">
-                                                                <i className="fa-solid fa-trash"></i>
+                                                                <i onClick={() => handleCancelarCita(Citas.id)}> Cancelar</i>
                                                             </button>
                                                         </td>
                                                     </tr>

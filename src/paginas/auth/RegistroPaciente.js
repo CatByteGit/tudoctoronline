@@ -13,6 +13,7 @@ const RegistroPaciente = () => {
     clave: '',
     confirmar: ''
   })
+  const [fechaActual, setFechaActual] = useState(new Date());
   const { Nombre_Apellido, TipoDocumento, Identificacion, FechaNaciPaci, Telefono, clave, confirmar } = Pacientes;
 
   const onChange = (e) => {
@@ -43,7 +44,25 @@ const RegistroPaciente = () => {
         return false; // Maneja el error si la solicitud falla 
       }
     };
-
+    if (new Date(FechaNaciPaci) > fechaActual) {
+      // FechaCita y HoraCita son menores que la fecha y hora actuales
+      const msg = "Fecha de nacimiento invalida";
+      swal({
+        title: 'Error',
+        text: msg,
+        icon: 'info',
+        buttons: {
+          confirmar: {
+            text: 'Ok',
+            value: true,
+            visible: true,
+            className: 'btn btn-danger',
+            closeModal: true
+          }
+        }
+      });
+      return;
+    }
     if (clave !== confirmar) {
       const msg = "Las contraseñas no coinciden.";
       swal({
@@ -168,9 +187,9 @@ const RegistroPaciente = () => {
                   onChange={onChange}
                 >
                   <option value="">Seleccione un tipo de documento</option>
-                  <option value="CedulaCiudadania">Cédula de Ciudadania</option>
-                  <option value="TarjetaIdentidad">Tarjeta de Identidad</option>
-                  <option value="RegistroCivil">Registro Civil</option>
+                  <option value="Cedula de Ciudadania">Cédula de Ciudadania</option>
+                  <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
+                  <option value="Registro Civil">Registro Civil</option>
                 </select>
                 <div className="input-group-append">
                   <div className="input-group-text">

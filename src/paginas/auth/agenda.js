@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import APIInvoke from '../../utils/APIInvoke';
 import swal from 'sweetalert';
 
 const Agenda = () => {
+
+  const navigate = useNavigate();
+
   const [Agenda, setAgenda] = useState({
     FechaCita: '',
     HoraCita: '',
     Doctor: '',
     IdentificacionDoc: '',
     Especialidad: '',
-    Disponible: 'Disponible',
+    Estado: 'Disponible',
     identificacionPa: '',
     NombrePa: '',
   })
@@ -98,7 +101,7 @@ const Agenda = () => {
     const mensaje = response.msg;
 
     if (usuarioExistente) {
-      const msg = "El doctor existe, se ha creado a agenda exitosamente";
+      const msg = "El doctor existe";
       swal({
         title: 'Hecho',
         text: msg,
@@ -146,6 +149,7 @@ const Agenda = () => {
             }
           }
         });
+        navigate("/detalleagenda")
       }
     } else {
       const msg = "El doctor no existe.";
@@ -175,7 +179,6 @@ const Agenda = () => {
         NombrePa: '',
       })
     }
-
   }
   const onSubmit = (e) => {
     e.preventDefault();
@@ -214,7 +217,7 @@ const Agenda = () => {
                 data-accordion="false"
               >
                 <li className="nav-item">
-                  <Link to={"/dashboard"} className="nav-link">
+                  <Link to={"/dashboardPaciente"} className="nav-link">
                     Inicio
                   </Link>
                 </li>
@@ -254,47 +257,35 @@ const Agenda = () => {
                     </div>
                   </div>
                   <div className="input-group mb-3">
-                    <input
-                      type='text'
-                      className="form-control"
-                      id="Especialidad"
+                    <select className="form-control"
                       name="Especialidad"
-                      placeholder="Especialidad"
                       value={Especialidad}
                       onChange={onChange}
-                    />
+                    >
+                      <option value="">Selecione el tipo de consulta</option>
+                      <option value="Medicina General">Medicina General</option>
+                      <option value="Odontología">Odontología</option>
+                      <option value="Ortopedia">Ortopedia</option>
+                    </select>
                     <div className="input-group-append">
                       <div className="input-group-text">
+                        <span/>
                       </div>
                     </div>
                   </div>
                   <div className="input-group mb-3">
-                    <input
-                      type='text'
-                      className="form-control"
-                      id="Doctor"
+                    <select className="form-control"
                       name="Doctor"
-                      placeholder="Doctor"
                       value={Doctor}
                       onChange={onChange}
-                    />
+                    >
+                      <option value="">Seleccione el medico</option>
+                      <option value="Mario">Mario</option>
+                      <option value="Jhoan">Jhoan</option>
+                    </select>
                     <div className="input-group-append">
                       <div className="input-group-text">
-                      </div>
-                    </div>
-                  </div>
-                  <div className="input-group mb-3">
-                    <input
-                      type='text'
-                      className="form-control"
-                      id="IdentificacionDoc"
-                      name="IdentificacionDoc"
-                      placeholder="Identificación Doctor"
-                      value={IdentificacionDoc}
-                      onChange={onChange}
-                    />
-                    <div className="input-group-append">
-                      <div className="input-group-text">
+                        <span/>
                       </div>
                     </div>
                   </div>
@@ -316,6 +307,7 @@ const Agenda = () => {
                       name="identificacionPa"
                       value={identificacionPa}
                       onChange={onChange}
+                      required
                     />
                   </div>
                   <div className="input-group mb-3">
@@ -326,6 +318,7 @@ const Agenda = () => {
                       name="NombrePa"
                       value={NombrePa}
                       onChange={onChange}
+                      required
                     />
                   </div>
                   <button type="submit" className="btn btn-success mt-3">

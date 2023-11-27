@@ -179,7 +179,7 @@ const RegistrarDoctores = () => {
                                     </Link>
                                 </li>
                                 <li class="nav-item">
-                                    <Link to={"/login"} className="nav-link">
+                                    <Link to={"/"} className="nav-link">
                                         Cerrar Sesión
                                     </Link>
                                 </li>

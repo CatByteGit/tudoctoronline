@@ -35,7 +35,7 @@ const Login = () => {
             try {
                 //crear la url para la consulta
                 const response = await APIInvoke.invokeGET(
-                    `/${tipoUsuario}?Identificacion=${Identificación}&Clave=${Clave}`
+                    `/${tipoUsuario}?Identificacion=${Identificación}&clave=${Clave}`
                 );
                 if (response && response.length > 0) {
                     // Devuelve el primer usuario que coincide
@@ -69,7 +69,7 @@ const Login = () => {
         } else {
             const PacientesExistente = await verificarExistenciaPacientes(Identificacion, Clave, tipoUsuario);
             const response = await APIInvoke.invokeGET(
-                `/${tipoUsuario}?Identificacion=${Identificacion}&Clave=${Clave}`
+                `/${tipoUsuario}?Identificacion=${Identificacion}&clave=${Clave}`
             );
 
             if (!PacientesExistente) {
@@ -167,7 +167,7 @@ const Login = () => {
                                             value={tipoUsuario}
                                             onChange={onChange}
                                         >
-                                            <option value="">Seleccione un tipo de documento</option>
+                                            <option value="">Seleccione su tipo de usuario</option>
                                             <option value="Doctor">Doctor</option>
                                             <option value="Pacientes">Paciente</option>
                                             <option value="Admin">Administrador</option>

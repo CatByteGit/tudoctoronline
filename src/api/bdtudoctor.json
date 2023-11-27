@@ -9,52 +9,77 @@
   "Pacientes": [
     {
       "Nombre_Apellido": "Jhoan",
-      "TipoDocumento": "CedulaCiudadania",
+      "TipoDocumento": "Cedula de Ciudadania",
       "Identificacion": "1098071276",
-      "FechaNaciPaci": "2023-11-30",
+      "FechaNaciPaci": "2005-06-30",
       "Telefono": "3126545342",
       "clave": "12345678",
       "id": 1
     },
     {
-      "Nombre_Apellido": "Jhoan",
-      "TipoDocumento": "CedulaCiudadania",
-      "Identificacion": "12345678",
-      "FechaNaciPaci": "2023-11-16",
-      "Telefono": "2134567897",
+      "Nombre_Apellido": "Pacho",
+      "TipoDocumento": "Cedula de Ciudadania",
+      "Identificacion": "1345678",
+      "FechaNaciPaci": "2023-11-07",
+      "Telefono": "3126545342",
       "clave": "12345678",
       "id": 2
     }
   ],
   "Doctor": [
     {
-      "Nombre_Apellido": "Mario",
-      "TipoDocumento": "CedulaCiudadania",
-      "Identificacion": "4441614645645665",
-      "Especialidad": "Medicina General",
-      "clave": "123456789",
-      "id": 4
-    },
-    {
       "Nombre_Apellido": "Jhoan",
       "TipoDocumento": "CedulaCiudadania",
       "Identificacion": "1098071276",
-      "Especialidad": "Odontología",
-      "clave": "123456789",
-      "id": 5
+      "Especialidad": "Medicina general",
+      "clave": "12345678",
+      "id": 1
     }
   ],
   "Agenda": [
     {
-      "FechaCita": "2023-11-25",
-      "HoraCita": "19:15",
+      "FechaCita": "2023-11-28",
+      "HoraCita": "21:40",
       "Doctor": "Mario",
-      "IdentificacionDoc": "4441614645645665",
-      "Especialidad": "Odontología",
+      "IdentificacionDoc": "",
+      "Especialidad": "Medicina General",
+      "Estado": "Cancelada",
+      "identificacionPa": "",
+      "NombrePa": "",
+      "id": 1
+    },
+    {
+      "FechaCita": "2023-11-30",
+      "HoraCita": "09:45",
+      "Doctor": "Mario",
+      "IdentificacionDoc": "",
+      "Especialidad": "Medicina General",
       "Estado": "Disponible",
       "identificacionPa": "1098071276",
       "NombrePa": "Jhoan",
-      "id": 6
+      "id": 2
+    },
+    {
+      "FechaCita": "2023-11-30",
+      "HoraCita": "09:47",
+      "Doctor": "Mario",
+      "IdentificacionDoc": "",
+      "Especialidad": "Medicina General",
+      "Estado": "Disponible",
+      "identificacionPa": "1098071276",
+      "NombrePa": "Jhoan",
+      "id": 3
+    },
+    {
+      "FechaCita": "2023-11-30",
+      "HoraCita": "10:45",
+      "Doctor": "Jhoan",
+      "IdentificacionDoc": "",
+      "Especialidad": "Medicina General",
+      "Estado": "Disponible",
+      "identificacionPa": "1098071276",
+      "NombrePa": "Jhoan",
+      "id": 4
     }
   ]
 }

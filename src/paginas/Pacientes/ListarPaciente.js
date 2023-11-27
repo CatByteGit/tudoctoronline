@@ -104,7 +104,7 @@ const ListarPaciente = () => {
                                     </Link>
                                 </li>
                                 <li class="nav-item">
-                                    <Link to={"/login"} className="nav-link">
+                                    <Link to={"/"} className="nav-link">
                                         Cerrar Sesión
                                     </Link>
                                 </li>
@@ -124,9 +124,6 @@ const ListarPaciente = () => {
                     </section>
                     <section className="content">
                         <div className="col-md-3">
-                            <Link to={"/RegistroPaciente"} className="btn btn-primary btn-block mb-3">
-                                <b>Agregar Paciente</b>
-                            </Link>
                         </div>
                         <div className="row">
                             <div className="col-md">

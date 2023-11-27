@@ -21,7 +21,7 @@ const ListarAgenda = () => {
     // Define la función envarSolicitud para manejar solicitudes DELETE
     const enviarSolicitud = async (metodo, id) => {
         try {
-            const respuesta = await axios.delete(`${url}/${id}`); // Envia una solicitud DELETE al servidor
+            const respuesta = await axios.pout(`${url}/${id}}`); // Envia una solicitud DELETE al servidor
             const tipo = respuesta.data[0];
             const msj = respuesta.data[1];
             show_alerta(msj, tipo);
@@ -114,6 +114,7 @@ const ListarAgenda = () => {
                 </aside>
                 <div className="content-wrapper">
                     <section className="content-header">
+
                         <div className="container-fluid">
                             <div className="row mb-2">
                                 <div className="col-sm-6">
@@ -123,6 +124,11 @@ const ListarAgenda = () => {
                         </div>
                     </section>
                     <section className="content">
+                        <div className="col-md-3">
+                            <Link to={"/agenda"} className="btn btn-primary btn-block mb-3">
+                                <b>Agregar Agenda</b>
+                            </Link>
+                        </div>
                         <div className="row">
                             <div className="col-md">
                                 <div className="card card-primary card-outline">
@@ -138,8 +144,6 @@ const ListarAgenda = () => {
                                                     <th style={{ width: '20%' }}>Estado</th>
                                                     <th style={{ width: '20%' }}>Identificación Paciente</th>
                                                     <th style={{ width: '20%' }}>NombrePaciente</th>
-                                                    <th style={{ width: '15%' }}>Editar</th>
-                                                    <th style={{ width: '15%' }}>Borrar</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="table-group-divider">
@@ -153,13 +157,6 @@ const ListarAgenda = () => {
                                                         <td>{Agenda.Estado}</td>
                                                         <td>{Agenda.identificacionPa}</td>
                                                         <td>{Agenda.NombrePa}</td>
-                                                        <td>
-                                                            <Link to={`/editarAgenda/${Agenda.id}`} className='btn btn-warning'>Editar</Link>
-                                                            &nbsp;
-                                                        </td><td><button onClick={() => deletePaciente(Agenda.id)}
-                                                            className="btn btn-danger" >
-                                                            <i className="fa-solid fa-trash"></i>
-                                                        </button></td>
 
                                                     </tr>
                                                 ))}
@@ -176,7 +173,7 @@ const ListarAgenda = () => {
                 <footer className="main-footer">
                     <div className="float-right d-none d-sm-block">
                     </div>
-                    <strong>Tu Doctor Online © 2014-2021.</strong> Derechos reservados.
+                    <strong>Tu Doctor Online © 2014-2023.</strong> Derechos reservados.
                 </footer>
             </div>
         </div>
